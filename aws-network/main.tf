@@ -1,6 +1,11 @@
 provider "aws" {
-  region = var.aws_region
+  region = var.region
+
+  # This tells Terraform to use environment variables
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
+
 
 # 1️.Create VPC
 resource "aws_vpc" "main_vpc" {

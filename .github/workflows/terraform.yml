@@ -3,7 +3,7 @@ name: Terraform AWS Deploy
 on:
   push:
     branches:
-      - main   # runs when you push to main branch
+      - main
 
 jobs:
   terraform:
@@ -19,16 +19,24 @@ jobs:
 
       - name: Terraform Init
         working-directory: ./aws-network
-        run: terraform init
-
-      - name: Terraform Plan
-        working-directory: ./aws-network
-        run: terraform plan -out=tfplan
-
-      - name: Terraform Apply
-        working-directory: ./aws-network
-        run: terraform apply -auto-approve tfplan
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-south-1
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ./aws-network
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: ./aws-network
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
+        run: terraform apply -auto-approve tfplan

@@ -27,3 +27,16 @@ variable "project_name" {
   type        = string
   default     = "TestNetwork"
 }
+
+
+variable "access_key" {
+  description = "AWS Access Key"
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_key" {
+  description = "AWS Secret Key"
+  type        = string
+  sensitive   = true
+}
