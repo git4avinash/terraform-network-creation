@@ -8,16 +8,8 @@ terraform {
   required_version = ">= 1.5.0"
 }
 
-
-
 provider "aws" {
-  region = var.region
-}
-
-variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "ap-south-1"
+  region = var.aws_region
 }
 
 # 1. Create VPC
@@ -36,7 +28,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-# 3. Public Subnets (2)
+# 3. Public Subnets
 resource "aws_subnet" "public" {
   count                   = length(var.public_subnets)
   vpc_id                  = aws_vpc.main_vpc.id

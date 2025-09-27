@@ -19,24 +19,11 @@ variable "public_subnets" {
 variable "azs" {
   description = "Availability Zones to use"
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
+  default     = ["ap-south-1a", "ap-south-1b"]
 }
 
 variable "project_name" {
   description = "Project tag prefix"
   type        = string
   default     = "TestNetwork"
-}
-
-
-variable "access_key" {
-  description = "AWS Access Key"
-  type        = string
-  sensitive   = true
-}
-
-variable "secret_key" {
-  description = "AWS Secret Key"
-  type        = string
-  sensitive   = true
 }
