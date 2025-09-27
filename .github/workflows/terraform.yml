@@ -24,17 +24,17 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        working-directory: ./terraform-network-creation
+        working-directory: ./terraform-network-creation/aws-network
         run: terraform init
 
       - name: Terraform Validate
-        working-directory: ./aws-network
+        working-directory: ./terraform-network-creation/aws-network
         run: terraform validate
 
       - name: Terraform Plan
-        working-directory: ./terraform-network-creation
+        working-directory: ./terraform-network-creation/aws-network
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        working-directory: .terraform-network-creation
+        working-directory: .terraform-network-creation/aws-network
         run: terraform apply -auto-approve tfplan
