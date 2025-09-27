@@ -1,13 +1,14 @@
 provider "aws" {
   region = var.region
-
-  # This tells Terraform to use environment variables
-  access_key = var.access_key
-  secret_key = var.secret_key
 }
 
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "ap-south-1"
+}
 
-# 1️.Create VPC
+# 1. Create VPC
 resource "aws_vpc" "main_vpc" {
   cidr_block = var.vpc_cidr
   tags = {
@@ -15,7 +16,7 @@ resource "aws_vpc" "main_vpc" {
   }
 }
 
-# 2️.Internet Gateway
+# 2. Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
   tags = {
@@ -23,7 +24,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-# 3️.Public Subnets (2)
+# 3. Public Subnets (2)
 resource "aws_subnet" "public" {
   count                   = length(var.public_subnets)
   vpc_id                  = aws_vpc.main_vpc.id
@@ -35,7 +36,7 @@ resource "aws_subnet" "public" {
   }
 }
 
-# 4️.Public Route Table
+# 4. Public Route Table
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.main_vpc.id
   route {
@@ -47,9 +48,9 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# 5️.Associate Public Route Table with Public Subnets
+# 5. Associate Public Route Table with Public Subnets
 resource "aws_route_table_association" "public_assoc" {
   count          = length(var.public_subnets)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public_rt.id
-}  
+}
